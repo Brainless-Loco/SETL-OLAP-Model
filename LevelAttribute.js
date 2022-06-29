@@ -1,0 +1,3 @@
+class LevelAttribute{
+    inLevel = []
+}
