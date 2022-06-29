@@ -6,5 +6,6 @@ class Level {
     }
     inHierarchy = null;
     hasAttribute = [];
+    measure;
   }
   

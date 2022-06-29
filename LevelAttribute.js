@@ -1,3 +1,4 @@
 class LevelAttribute{
     inLevel = []
+    updateType;
 }

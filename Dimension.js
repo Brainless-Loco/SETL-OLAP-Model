@@ -3,5 +3,6 @@ class Dimension {
         this.title = title;
     }
     hasHierarchy = [];
+    aggregationFunction = new AggregationFunction;
   }
   
