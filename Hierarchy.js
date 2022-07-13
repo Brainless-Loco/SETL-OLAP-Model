@@ -1,8 +1,16 @@
 class Hierarchy {
-    constructor(title,inDimension) {
-        this.title = title;
+    constructor(sub,pred,obj,inDimensionType,inDimension){
+        this.sub = sub;
+        this.pred = pred;
+        this.obj = obj;
+        this.inDimensionType = inDimensionType;
         this.inDimension = inDimension;
     }
-    hasLevel = [];
+    hasLevels = [
+        (
+            type,
+            ids = []
+        )
+    ]; ///array of tupels (levelType, [levelValues])
   }
   

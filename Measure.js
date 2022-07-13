@@ -1,4 +1,4 @@
-class LevelAttribute{
+class Measure{
     constructor(sub,pred,obj){
         this.sub = sub;
         this.pred = pred;
@@ -11,4 +11,5 @@ class LevelAttribute{
             language
         )
     ]
+    range = (type, rangeValue);
 }

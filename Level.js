@@ -1,11 +1,21 @@
 class Level {
-    constructor(title, parentLevel, childLevel){
-        this.title = title;
-        this.parentLevel = parentLevel;
-        this.childLevel = childLevel;
+    constructor(sub,pred,obj){
+        this.sub = sub;
+        this.pred = pred;
+        this.obj = obj;
     }
-    inHierarchy = null;
-    hasAttribute = [];
-    measure;
+    hasAttributes  = [
+        (
+            type,
+            ids = []
+        )
+    ]; ///array of tuples(hasAttributeType, [values])
+    label = [
+        (
+            type,
+            labelValue,
+            language
+        )
+    ]
   }
   

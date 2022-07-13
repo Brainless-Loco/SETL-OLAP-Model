@@ -1,8 +1,16 @@
 class Dimension {
-    constructor(title){
-        this.title = title;
+    constructor(sub,pred,obj){
+        this.sub = sub;
+        this.pred = pred;
+        this.obj = obj;
     }
-    hasHierarchy = [];
+    hasHierarchiesType;
+    hasHierarchies = [
+        (
+            type,
+            ids = []
+        )
+    ]; //array of arrayS of <hasHierarchyType (eg: qb4o:hasHierarchy ), HierarchyId(s)>
     aggregationFunction = new AggregationFunction;
   }
   
