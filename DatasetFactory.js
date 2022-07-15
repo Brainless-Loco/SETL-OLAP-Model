@@ -1,9 +1,12 @@
+const Dataset = require('./Dataset')
 const QueryEngine = require('@comunica/query-sparql').QueryEngine
 const fs = require('fs')
 
 module.exports = class DatasetFactory {
-    constructor(source) {
+
+    constructor(source,blankArray) {
         this.source = source ?? "https://firebasestorage.googleapis.com/v0/b/serveturtle.appspot.com/o/rdfsource%2FPopulationByResAdm5LivposTargetTBox-1.ttl?alt=media&token=357a68b4-52fe-40f9-84fc-931f4d980589"
+        this.datasetArr = blankArray ?? []
     }
     extractEndpointDataset(endPoint) {
         // Case 1: No remote endpoint
@@ -23,13 +26,16 @@ module.exports = class DatasetFactory {
     
         const mEngine = new QueryEngine()
         const resStream = await mEngine.queryBindings(sparql, {sources: [this.source]})
-        
-        resStream.on('data', hash => {
-            console.log("Getting dataset", hash.toString())
-            const dataset = hash["s"]
-            const cube = hash["x"]
-
-            this.getObservation(dataset, mEngine)
+        //console.log(resStream)
+        resStream.on('data', (hash) => {
+            const sub = hash.get('s').value
+            const structType = hash.get('p').value
+            const obj = hash.get('o').value
+            const structureId = hash.get('x').value
+            //this.getObservation(dataset, mEngine) 
+            const newDataset = new Dataset(sub,'a',obj,{structType,structureId});
+            console.log(newDataset)
+            this.datasetArr.push(newDataset)
             // Make an array of Dataset class instance
             // Push into the array the hash object from this function
             // Notify the client app
@@ -44,7 +50,10 @@ module.exports = class DatasetFactory {
 
         const resStream = await mEngine.queryBindings(sparql, {source: this.source})
         resStream.on('data', hash => {
-            console.log("Getting observations", hash.toString())
+            ///console.log("Getting observations", hash.toString())
+            const ob =hash.get('numobs').value
+            //console.log(ob)
         })
     }
+    getDatasetArray = () => {return this.datasetArr}
 }
