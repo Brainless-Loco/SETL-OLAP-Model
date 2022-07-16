@@ -1,15 +1,12 @@
-class Cube {
+module.exports = class Cube {
   constructor(sub,pred,obj){
     this.sub = sub;
     this.pred = pred;
     this.obj = obj;
   }
-  hasComponent = [
-    (
-      type,
-      dimensionType,
-      dimensionid
-    )
-  ] //array of pair<hasComponentType,dimensionType,dimensionId>
+
+  setSubject(sub) { this.sub = sub }
+  setPredicate(pred) { this.pred = pred }
+  setObject(obj) { this.obj = obj }
 }
   

@@ -1,5 +1,6 @@
 const CubeFactory = require('./CubeFactory')
 const DatasetFactory = require('./DatasetFactory')
+const LevelFactory = require('./LevelFactory')
 
 const main = async () => {
     const dsFact = new DatasetFactory()
@@ -10,15 +11,30 @@ const main = async () => {
     console.log(dsFact.getDatasetArray())
 
     // Extract cube, level, heirarchy etc
-    dsFact.getDatasetArray().forEach(dataset => {
-        const cuFact = new CubeFactory(null, dataset)
-        cuFact.extractOlapDatasetCube().then(() => {
-            cuFact.extractData()
-        })
-    });
+    dsFact.getDatasetArray().forEach(extractCube);
     
 
     
-} 
+}
+
+const extractCube = async (dataset) => {
+    const cuFact = new CubeFactory(null, dataset)
+    await cuFact.extractOlapDatasetCube()
+    const isCuboid = cuFact.extractData()
+
+    console.log(cuFact.cube)
+
+    if(isCuboid) {
+        await extractLevel(cuFact.cube)
+    } else {
+        // Do stuff for dimension
+    }
+}
+
+const extractLevel = async (cuboid) => {
+    const lvlFact = new LevelFactory(null, cuboid.sub)
+    await lvlFact.getCuboidLevel()
+    lvlFact.extractData()
+}
 
 main()
