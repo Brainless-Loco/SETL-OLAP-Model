@@ -37,11 +37,10 @@ module.exports = class DatasetFactory {
     async extractEndpointDataset(endPoint) {
         // Case 1: No remote endpoint
         if(!Boolean(endPoint)) {
-            const result = await this.getDefaultResultSet()
-            this.resultSet = result
-            return result
+            this.resultSet = await this.getDefaultResultSet()
+            
         }
-        // TODO Case 2: Has remote endpoint
+        // TODO Case 2: Has remote endpoint (DatasetFactory)
     }
     
     // Gets result set for no endpoint queries
@@ -53,7 +52,7 @@ module.exports = class DatasetFactory {
         + "?s qb:structure ?x.\r\n}"
     
         const mEngine = new QueryEngine()
-        const resStream = await mEngine.queryBindings(sparql, {sources: [this.source]})
+        const resStream = await mEngine.queryBindings(sparql, {source: this.source})
         //console.log(resStream)
         const result = await resStream.toArray()
         return result
