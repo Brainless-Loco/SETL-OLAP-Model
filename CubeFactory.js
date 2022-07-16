@@ -27,7 +27,20 @@ module.exports = class CubeFactory {
         let isCuboid = false      // If it is a cuboid, then extract the levels
 
         this.resultSet.forEach(item => {
+
+            const sub = item.get('cube').value
+            const pred = item.get('pred').value
+            const obj = item.get('obj').value
+
+            this.cube.setSubject(sub)
+            this.cube.setPredicate(pred)
+            this.cube.setObject(obj)
             //console.log(item.toString())
+
+            if(pred.includes('isCuboidOf')) {
+                isCuboid = true
+                return
+            }
         })
 
         return isCuboid
@@ -46,7 +59,7 @@ module.exports = class CubeFactory {
         const mEngine = new QueryEngine()
         const resStream = await mEngine.queryBindings(sparql, {source: this.source})
         const result = await resStream.toArray()
-        console.log(resStream.toString())
+        //console.log(result.toString())
         return result
     }
 }

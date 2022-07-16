@@ -4,6 +4,9 @@ class Dimension {
         this.pred = pred;
         this.obj = obj;
     }
+    setSubject(sub) { this.sub = sub }
+    setPredicate(pred) { this.pred = pred }
+    setObject(obj) { this.obj = obj }
     hasHierarchiesType;
     hasHierarchies = [
         (
