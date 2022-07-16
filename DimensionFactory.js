@@ -1,5 +1,4 @@
-const Cube = require('./Cube')
-const Dataset = require('./Dataset')
+const Dimension = require('./Dimension')
 const QueryEngine = require('@comunica/query-sparql').QueryEngine
 
 module.exports = class CubeFactory {
@@ -7,7 +6,6 @@ module.exports = class CubeFactory {
         this.source = source ?? "https://firebasestorage.googleapis.com/v0/b/serveturtle.appspot.com/o/rdfsource%2FPopulationByResAdm5LivposTargetTBox-1.ttl?alt=media&token=357a68b4-52fe-40f9-84fc-931f4d980589"
         this.dataset = dataset ?? new Dataset()
         this.resultSet = []
-        this.cube = new Cube()
     }
 
     // Extract cube from the tbox of a dataset, no endpoints by default
@@ -22,15 +20,9 @@ module.exports = class CubeFactory {
     // Extract data here
     extractData() {
         // Extract data from the result set accordingly
-
-        // Extracting cube
-        let isCuboid = false      // If it is a cuboid, then extract the levels
-
         this.resultSet.forEach(item => {
             //console.log(item.toString())
         })
-
-        return isCuboid
     }
 
     async getDefaultResultSet() {
@@ -46,7 +38,7 @@ module.exports = class CubeFactory {
         const mEngine = new QueryEngine()
         const resStream = await mEngine.queryBindings(sparql, {source: this.source})
         const result = await resStream.toArray()
-        console.log(resStream.toString())
+        console.log(result)
         return result
     }
 }
