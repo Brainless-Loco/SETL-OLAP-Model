@@ -4,14 +4,42 @@ const fs = require('fs')
 
 module.exports = class DatasetFactory {
 
-    constructor(source,blankArray) {
+    constructor(source, datasetArr) {
         this.source = source ?? "https://firebasestorage.googleapis.com/v0/b/serveturtle.appspot.com/o/rdfsource%2FPopulationByResAdm5LivposTargetTBox-1.ttl?alt=media&token=357a68b4-52fe-40f9-84fc-931f4d980589"
-        this.datasetArr = blankArray ?? []
+        this.datasetArr = datasetArr ?? []
+        this.resultSet = []
     }
-    extractEndpointDataset(endPoint) {
+
+    extractDataset() {
+        const tempDataset = new Dataset()
+        this.resultSet.forEach((hash, idx) => {
+            // const sub = hash.get('s').value
+            // const structType = hash.get('p').value
+            // const obj = hash.get('o').value
+            // const structureId = hash.get('x').value
+            // this.getObservation(dataset, mEngine) 
+
+            if(idx & 1) tempDataset.setSchemaIri(hash.get('o').value)
+            else tempDataset.setIri(hash.get('s').value)
+            
+            if(idx & 1) {
+                tempDataset.extractName(tempDataset.iri)
+                this.datasetArr.push(tempDataset)
+            }
+            
+
+            // Make an array of Dataset class instance
+            // Push into the array the hash object from this function
+            // Notify the client app
+        })
+    }
+    
+    async extractEndpointDataset(endPoint) {
         // Case 1: No remote endpoint
         if(!Boolean(endPoint)) {
-            const queryResult = this.getDefaultResultSet()
+            const result = await this.getDefaultResultSet()
+            this.resultSet = result
+            return result
         }
         // TODO Case 2: Has remote endpoint
     }
@@ -27,19 +55,8 @@ module.exports = class DatasetFactory {
         const mEngine = new QueryEngine()
         const resStream = await mEngine.queryBindings(sparql, {sources: [this.source]})
         //console.log(resStream)
-        resStream.on('data', (hash) => {
-            const sub = hash.get('s').value
-            const structType = hash.get('p').value
-            const obj = hash.get('o').value
-            const structureId = hash.get('x').value
-            //this.getObservation(dataset, mEngine) 
-            const newDataset = new Dataset(sub,'a',obj,{structType,structureId});
-            console.log(newDataset)
-            this.datasetArr.push(newDataset)
-            // Make an array of Dataset class instance
-            // Push into the array the hash object from this function
-            // Notify the client app
-        })
+        const result = await resStream.toArray()
+        return result
     }
 
     async getObservation(dataset, mEngine) {
