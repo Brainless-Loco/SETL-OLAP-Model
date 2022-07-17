@@ -26,7 +26,7 @@ module.exports = class LevelFactory {
 
     extractData() {
         this.resultSet.forEach(item => {
-            ///console.log(item.toString())
+            //console.log(item.toString())
         })
     }
 }

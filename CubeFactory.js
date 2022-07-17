@@ -35,7 +35,6 @@ module.exports = class CubeFactory {
             this.cube.setSubject(sub)
             this.cube.setPredicate(pred)
             this.cube.setObject(obj)
-            //console.log(item.toString())
 
             if(pred.includes('isCuboidOf')) {
                 isCuboid = true
@@ -59,7 +58,7 @@ module.exports = class CubeFactory {
         const mEngine = new QueryEngine()
         const resStream = await mEngine.queryBindings(sparql, {source: this.source})
         const result = await resStream.toArray()
-        //console.log(result.toString())
+        ///console.log(result.toString())
         return result
     }
 }

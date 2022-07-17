@@ -23,17 +23,19 @@ const extractCube = async (dataset) => {
     const cuFact = new CubeFactory(null, dataset)
     await cuFact.extractOlapDatasetCube()
     const isCuboid = cuFact.extractData()
-    // const dimensionFact = new DimensionFactory(null,cuFact.cube);
-
-    //console.log(cuFact.cube)
+    
 
     if(isCuboid) {
         await extractLevel(cuFact.cube)
-        //console.log(cuFact.cube)
+        const dimFact = new DimensionFactory(null,cuFact.cube)
+        await dimFact.extractOlapDimension(null)
+        dimFact.extractDimension()
+        ///console.log(dimFact.getDimensionArray())
     } else {
         // Do stuff for dimension
         const dimFact = new DimensionFactory(null,cuFact.cube)
-        console.log("Got a Cube: "+cuFact)
+        await dimFact.extractOlapDimension(null)
+        dimFact.extractDimension()
     }
 }
 

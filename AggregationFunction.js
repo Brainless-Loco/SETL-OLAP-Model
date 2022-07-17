@@ -1,4 +1,4 @@
-class AggregationFunction{
+module.exports = class AggregationFunction{
     AVG = null;
     COUNT = null;
     MAX = null;
