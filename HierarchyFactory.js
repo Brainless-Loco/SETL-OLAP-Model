@@ -1,4 +1,5 @@
 const { QueryEngine } = require("@comunica/query-sparql")
+const Hierarchy = require('./Hierarchy')
 
 module.exports = class HeirarchyFactory {
     constructor(source, dimensions) {
@@ -10,8 +11,24 @@ module.exports = class HeirarchyFactory {
 
     async fetchCubeHierarchies() {
         const context = this
+        const obj = "http://purl.org/qb4olap/cubes#Hierarchy"
 
-        this.dimensions.forEach(dimension => {this.fetchHierarchyFromDimension(dimension, context)});
+        this.dimensions.forEach(dimension => {
+            let tempHierarchies = this.fetchHierarchyFromDimension(dimension, context)
+            let i = 0 
+            return tempHierarchies.then((arrayOfHierarchy)=>{
+                let temp = []
+                arrayOfHierarchy.forEach( (item)=>{
+                    let tempHierarchy = new Hierarchy()
+                    let sub = item.get('x').value
+                    tempHierarchy.setSubject(sub)
+                    tempHierarchy.setObject(obj)
+                    tempHierarchy.setInDimension(dimension)
+                    temp.push(tempHierarchy)
+                } )
+                console.log(temp)
+            })
+        });
     }
     
     async fetchHierarchyFromDimension(dimension, context) {
@@ -24,8 +41,8 @@ module.exports = class HeirarchyFactory {
 
         const resStream = await mEngine.queryBindings(sparql, {source: context.source})
         const result = await resStream.toArray()
-        result.forEach(item => {
-            console.log(item.toString())
-        })
+        return result
+        //console.log(result.toString())
     }
+    getHierarchySet = ()=>{return this.resultSet}
 }

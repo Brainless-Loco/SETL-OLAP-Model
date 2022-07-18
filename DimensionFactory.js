@@ -21,16 +21,16 @@ module.exports = class DimensionFactory {
 
     // Extract data here
     extractDimension() {
-        let tempSet = []
-        this.resultSet.forEach(item => {
-            const sub = item.get('o').value
-            const obj = "http://purl.org/qb4olap/cubes#dimension"
-            this.dimension.setSubject(sub)
-            this.dimension.setObject(obj)
-            tempSet.push(this.dimension)
+        let index = 0
+        let tempset = []
+        const obj = "http://purl.org/qb4olap/cubes#dimension"
+        this.resultSet = this.resultSet.forEach(item => {
+            let sub = item.get('o').value
+            let tempDimension = new Dimension(sub,'a',obj)
+            tempset.push(tempDimension)
+
         })
-        this.resultSet = tempSet
-        console.log(this.resultSet)
+        this.resultSet = tempset
     }
 
     async getDefaultResultSet() {

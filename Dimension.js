@@ -9,5 +9,6 @@ module.exports = class Dimension {
     setSubject(sub) { this.sub = sub }
     setPredicate(pred) { this.pred = pred }
     setObject(obj) { this.obj = obj }
+    hasHierarchies = []
   }
   

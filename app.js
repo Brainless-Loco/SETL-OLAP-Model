@@ -11,7 +11,7 @@ const main = async () => {
     dsFact.extractDataset()
     
     // To be able to use the dataset array here
-    console.log(dsFact.getDatasetArray())
+    //console.log(dsFact.getDatasetArray())
 
     // Extract cube, level, heirarchy etc
     dsFact.getDatasetArray().forEach(extractCube);
@@ -26,7 +26,7 @@ const extractCube = async (dataset) => {
     await cuFact.extractOlapDatasetCube()
     const isCuboid = cuFact.extractData()
     
-    console.log(cuFact.cube)
+    //console.log(cuFact.cube)
     
 
     if(isCuboid) {
@@ -41,10 +41,13 @@ const extractCube = async (dataset) => {
     const dimFact = new DimensionFactory(null, new Cube(cuFact.cube.obj, null, null))
     await dimFact.extractOlapDimension(null)
     dimFact.extractDimension()
+    //console.log(dimFact.getDimensionArray())
 
     // Extract Hierarchies
     const hierFact = new HeirarchyFactory(null, dimFact.getDimensionArray())
     await hierFact.fetchCubeHierarchies()
+    console.log(hierFact.getHierarchySet())
+
 }
 
 const extractLevel = async (cuboid) => {
@@ -52,7 +55,7 @@ const extractLevel = async (cuboid) => {
     await lvlFact.getCuboidLevel()
     lvlFact.extractData()
 
-    console.log(lvlFact.getLevelArray())
+    //console.log(lvlFact.getLevelArray())
 }
 
 main()
