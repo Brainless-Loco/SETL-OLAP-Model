@@ -28,6 +28,7 @@ const extractCube = async (dataset) => {
         await extractLevel(cuFact.cube)
     } else {
         // Do stuff for dimension
+        // await extractDimension(cuFact.cube)
     }
 }
 
@@ -35,6 +36,8 @@ const extractLevel = async (cuboid) => {
     const lvlFact = new LevelFactory(null, cuboid.sub)
     await lvlFact.getCuboidLevel()
     lvlFact.extractData()
+
+    console.log(lvlFact.getLevelArray())
 }
 
 main()

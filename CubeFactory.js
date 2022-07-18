@@ -8,6 +8,7 @@ module.exports = class CubeFactory {
         this.dataset = dataset ?? new Dataset()
         this.resultSet = []
         this.cube = new Cube()
+        this.isCuboid = false
     }
 
     // Extract cube from the tbox of a dataset, no endpoints by default
@@ -24,7 +25,7 @@ module.exports = class CubeFactory {
         // Extract data from the result set accordingly
 
         // Extracting cube
-        let isCuboid = false      // If it is a cuboid, then extract the levels
+        this.isCuboid = false      // If it is a cuboid, then extract the levels
 
         this.resultSet.forEach(item => {
 
@@ -37,12 +38,12 @@ module.exports = class CubeFactory {
             this.cube.setObject(obj)
 
             if(pred.includes('isCuboidOf')) {
-                isCuboid = true
+                this.isCuboid = true
                 return
             }
         })
 
-        return isCuboid
+        return this.isCuboid
     }
 
     async getDefaultResultSet() {
