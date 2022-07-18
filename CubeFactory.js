@@ -59,6 +59,7 @@ module.exports = class CubeFactory {
         const mEngine = new QueryEngine()
         const resStream = await mEngine.queryBindings(sparql, {source: this.source})
         const result = await resStream.toArray()
+        ///console.log(result.toString())
         return result
     }
 }

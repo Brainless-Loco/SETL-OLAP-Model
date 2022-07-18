@@ -1,4 +1,4 @@
-class LevelAttribute{
+module.exports = class LevelAttribute{
     constructor(sub,pred,obj){
         this.sub = sub;
         this.pred = pred;
