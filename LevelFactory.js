@@ -28,7 +28,7 @@ module.exports = class LevelFactory {
 
     extractData() {
         this.resultSet.forEach(item => {
-            this.levelArray.push(new Level(null, null, item.get('o').value))
+            this.levelArray.push(new Level(item.get('o').value, null, null))
         })
     }
 

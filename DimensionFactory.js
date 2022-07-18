@@ -4,12 +4,11 @@ const Dimension = require('./Dimension')
 const QueryEngine = require('@comunica/query-sparql').QueryEngine
 
 module.exports = class DimensionFactory {
-    constructor(source, cube,isCuboid) {
+    constructor(source, cube) {
         this.source = source ?? "https://firebasestorage.googleapis.com/v0/b/serveturtle.appspot.com/o/rdfsource%2FPopulationByResAdm5LivposTargetTBox-1.ttl?alt=media&token=357a68b4-52fe-40f9-84fc-931f4d980589"
         this.cube = cube ?? new Cube()
         this.resultSet = []
         this.dimension = new Dimension()
-        this.isCuboid = isCuboid
     }
 
     async extractOlapDimension(endPoint) {
@@ -35,12 +34,11 @@ module.exports = class DimensionFactory {
     }
 
     async getDefaultResultSet() {
-        let cubeOrCuboid = this.isCuboid ? this.cube.sub : this.cube.obj
         const sparql = "PREFIX qb:	<http://purl.org/linked-data/cube#>\r\n"
 				+ "PREFIX	owl:	<http://www.w3.org/2002/07/owl#>\r\n"
 				+ "PREFIX	qb4o:	<http://purl.org/qb4olap/cubes#>\r\n"
-				+ "SELECT DISTINCT ?o WHERE { <" + cubeOrCuboid + "> a qb:DataStructureDefinition.\n"
-				+ "<" + cubeOrCuboid + "> qb:component ?s.\n"
+				+ "SELECT DISTINCT ?o WHERE { <" + this.cube.sub + "> a qb:DataStructureDefinition.\n"
+				+ "<" + this.cube.sub + "> qb:component ?s.\n"
 				+ "?s qb4o:dimension ?o.\n"
 				+ "}"
 
