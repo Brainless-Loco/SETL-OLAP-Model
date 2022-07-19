@@ -21,7 +21,6 @@ module.exports = class DimensionFactory {
 
     // Extract data here
     extractDimension() {
-        let index = 0
         let tempset = []
         const obj = "http://purl.org/qb4olap/cubes#dimension"
         this.resultSet = this.resultSet.forEach(item => {
@@ -47,5 +46,6 @@ module.exports = class DimensionFactory {
         const result = await resStream.toArray()
         return result
     }
-    getDimensionArray = () => {return this.resultSet}
+    
+    getDimensionArray = () => { return this.resultSet }
 }

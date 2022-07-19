@@ -1,3 +1,5 @@
+const Cube = require("./Cube")
+
 module.exports = class Dataset {
     
     constructor(iri, schemaIri){
@@ -5,6 +7,7 @@ module.exports = class Dataset {
       this.schemaIri = schemaIri
       this.name = ''
       this.prefix = ''
+      this.cube = new Cube()
     }
 
     setIri(iri) { this.iri = iri }
@@ -14,6 +17,8 @@ module.exports = class Dataset {
         this.name = arr[1]
         this.prefix = arr[0]
     }
+
+    setCube(cube) { this.cube = cube }
 }
     
   

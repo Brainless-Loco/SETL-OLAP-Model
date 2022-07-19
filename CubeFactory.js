@@ -62,4 +62,6 @@ module.exports = class CubeFactory {
         ///console.log(result.toString())
         return result
     }
+
+    getCube() { return this.cube }
 }

@@ -3,17 +3,11 @@ module.exports = class Hierarchy {
         this.sub = sub;
         this.pred = pred;
         this.obj = obj;
-        this.inDimension = inDimension;
+        this.hierarchyStep = []
     }
     setSubject(sub) { this.sub = sub }
     setPredicate(pred) { this.pred = pred }
     setObject(obj) { this.obj = obj }
-    setInDimension(inDimension) {this.inDimension = inDimension}
-    hasLevels = [
-        // (
-        //     type,
-        //     ids = []
-        // )
-    ]; ///array of tupels (levelType, [levelValues])
+    setHierarchyStep(hierarchyStep) {this.hierarchyStep = hierarchyStep}
   }
   
